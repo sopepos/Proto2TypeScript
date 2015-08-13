@@ -1,5 +1,5 @@
 {
-  "name": "Proto2TypeScript",
+  "name": "proto2typescript",
   "version": "0.1.0",
   "dependencies": {
     "protobufjs": "~2.0.5",
