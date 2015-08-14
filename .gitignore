@@ -16,3 +16,7 @@ node_modules
 tests/*.json
 tests/*.d.ts
 tests.js
+
+.idea
+*.iml
+

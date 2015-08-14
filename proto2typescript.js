@@ -1,16 +1,30 @@
-/// <reference path="./definitions/node.d.ts" />
-/// <reference path="./definitions/dustjs-linkedin.d.ts" />
-var argv = require('optimist').usage('Convert a ProtoBuf.js JSON description in TypeScript definitions.\nUsage: $0').demand('f').alias('f', 'file').describe('f', 'The JSON file').boolean('c').alias('c', 'camelCaseGetSet').describe('c', 'Generate getter and setters in camel case notation').default('c', true).boolean('u').alias('u', 'underscoreGetSet').describe('u', 'Generate getter and setters in underscore notation').default('u', false).boolean('p').alias('p', 'properties').describe('p', 'Generate properties').default('p', true).argv;
+#!/usr/bin/env node
 
-// Import in typescript and commondjs style
-//var ProtoBuf = require("protobufjs");
+var argv = require('optimist')
+    .usage('Convert a ProtoBuf.js JSON description in TypeScript definitions.\nUsage: $0')
+    .demand('f')
+    .alias('f', 'file')
+    .describe('f', 'The JSON file')
+    .boolean('c')
+    .alias('c', 'camelCaseGetSet')
+    .describe('c', 'Generate getter and setters in camel case notation')
+    .default('c', true)
+    .boolean('u')
+    .alias('u', 'underscoreGetSet')
+    .describe('u', 'Generate getter and setters in underscore notation')
+    .default('u', false)
+    .boolean('p')
+    .alias('p', 'properties')
+    .describe('p', 'Generate properties')
+    .default('p', true)
+    .argv;
+
+// Import in commondjs style
 var DustJS = require("dustjs-linkedin");
 var fs = require("fs");
 
 // Keep line breaks
-DustJS.optimizers.format = function (ctx, node) {
-    return node;
-};
+DustJS.optimizers.format = function (ctx, node) { return node; };
 
 // Create view filters
 DustJS.filters["firstLetterInUpperCase"] = function (value) {
@@ -22,9 +36,7 @@ DustJS.filters["firstLetterInLowerCase"] = function (value) {
 };
 
 DustJS.filters["camelCase"] = function (value) {
-    return value.replace(/(_[a-zA-Z])/g, function (match) {
-        return match[1].toUpperCase();
-    });
+    return value.replace(/(_[a-zA-Z])/g, function (match) { return match[1].toUpperCase(); });
 };
 
 DustJS.filters["convertType"] = function (value) {
@@ -49,34 +61,33 @@ DustJS.filters["convertType"] = function (value) {
         case 'sfixed64':
             return "number";
     }
-
     // By default, it's a message identifier
     return value;
 };
 
-DustJS.filters["optionalFieldDeclaration"] = function (value) {
-    return value == "optional" ? "?" : "";
-};
+DustJS.filters["optionalFieldDeclaration"] = function (value) { return value == "optional" ? "?" : ""; };
 
-DustJS.filters["repeatedType"] = function (value) {
-    return value == "repeated" ? "[]" : "";
-};
+DustJS.filters["repeatedType"] = function (value) { return value == "repeated" ? "[]" : ""; };
+
 
 function loadDustTemplate(name) {
-    var template = fs.readFileSync("./templates/" + name + ".dust", "UTF8").toString(), compiledTemplate = DustJS.compile(template, name);
-
+    var template = fs.readFileSync("./templates/" + name + ".dust", "UTF8").toString();
+    var compiledTemplate = DustJS.compile(template, name);
     DustJS.loadSource(compiledTemplate);
 }
 
 // Generate the names for the model, the types, and the interfaces
 function generateNames(model, prefix, name) {
-    if (typeof name === "undefined") { name = ""; }
+    if (name === void 0) {
+        name = "";
+    }
     model.fullPackageName = prefix + (name != "." ? name : "");
 
     // Copies the settings (I'm lazy)
     model.properties = argv.properties;
     model.camelCaseGetSet = argv.camelCaseGetSet;
     model.underscoreGetSet = argv.underscoreGetSet;
+
 
     var newDefinitions = {};
 
@@ -89,12 +100,15 @@ function generateNames(model, prefix, name) {
         generateNames(message, model.fullPackageName, "." + (model.name ? model.name : ""));
     }
 
+    // Generate names for enums
     for (key in model.enums) {
         var currentEnum = model.enums[key];
         newDefinitions[currentEnum.name] = "";
         currentEnum.fullPackageName = model.fullPackageName + (model.name ? "." + model.name : "");
     }
 
+    // For fields of types which are defined in the same message,
+    // update the field type in consequence
     for (key in model.fields) {
         var field = model.fields[key];
         if (typeof newDefinitions[field.type] !== "undefined") {
@@ -107,6 +121,7 @@ function generateNames(model, prefix, name) {
     for (key in newDefinitions) {
         definitions.push({ name: key, type: ((model.name ? (model.name + ".") : "") + key) + newDefinitions[key] });
     }
+
     model.definitions = definitions;
 }
 
@@ -123,7 +138,6 @@ var model = JSON.parse(fs.readFileSync(argv.file).toString());
 if (!model.package) {
     model.package = "Proto2TypeScript";
 }
-
 // Generates the names of the model
 generateNames(model, model.package);
 
@@ -132,8 +146,8 @@ DustJS.render("module", model, function (err, out) {
     if (err != null) {
         console.error(err);
         process.exit(1);
-    } else {
+    }
+    else {
         console.log(out);
     }
 });
-//# sourceMappingURL=command.js.map
