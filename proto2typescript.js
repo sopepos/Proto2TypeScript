@@ -71,7 +71,7 @@ DustJS.filters["repeatedType"] = function (value) { return value == "repeated" ?
 
 
 function loadDustTemplate(name) {
-    var template = fs.readFileSync("./templates/" + name + ".dust", "UTF8").toString();
+    var template = fs.readFileSync(__dirname + "/templates/" + name + ".dust", "UTF8").toString();
     var compiledTemplate = DustJS.compile(template, name);
     DustJS.loadSource(compiledTemplate);
 }
@@ -132,7 +132,14 @@ loadDustTemplate("enum");
 loadDustTemplate("builder");
 
 // Load the json file
-var model = JSON.parse(fs.readFileSync(argv.file).toString());
+var model;
+try{
+    model = JSON.parse(fs.readFileSync(argv.file).toString());
+}
+catch(e){
+    console.error("Input file doesn't look like a JSON!");
+    process.exit(1);
+}
 
 // If a packagename isn't present, use a default package name
 if (!model.package) {
