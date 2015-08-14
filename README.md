@@ -3,6 +3,21 @@ Proto2TypeScript
 
 This tool generate TypeScript definitions for your Protocol Buffers models, when you use the excellent [ProtoBuf.js](https://github.com/dcodeIO/ProtoBuf.js/) library.
 
+UPDATES -- Difference from the original
+================
+[Original tool](https://github.com/SINTEF-9012/Proto2TypeScript) doesn't seem supported anymore.
+
+#### My updates:
+* Made the package globally installable
+* Converted the tool code from Typescript to Javascript as the build process for NPM package with Typescript
+  was not there at all
+* Fixed some bugs
+* Published on NPM
+
+Also, the build process was a mess. I fixed those. But I don't even send a PR, because I changed a lot of stuff.
+
+
+
 ### Installation
 ```sh
 npm install proto2typescript -g
