@@ -24,11 +24,15 @@ var argv = require('optimist')
 
     .argv;
 
+
+var vinylFile = require('vinyl-file');
 var proto2typescript = require('../lib/proto2typescript');
 
+var file = vinylFile.readSync(argv.file);
+
 proto2typescript(
+    file.contents,
     {
-        file: argv.file,
         camelCaseGetSet: argv.camelCaseGetSet,
         underscoreGetSet: argv.underscoreGetSet,
         properties: argv.properties

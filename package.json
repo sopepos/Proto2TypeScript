@@ -23,11 +23,11 @@
     "websocket",
     "typescript"
   ],
-
   "dependencies": {
-    "protobufjs": "~4.0.0",
     "dustjs-linkedin": "~2.3.3",
-    "optimist": "~0.6.1"
+    "optimist": "~0.6.1",
+    "protobufjs": "~4.0.0",
+    "vinyl-file": "^1.2.1"
   },
   "devDependencies": {
     "expect.js": "~0.3.1",

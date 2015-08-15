@@ -41,6 +41,9 @@ Options:
   -p, --properties        Generate properties                                 [default: true]
 ```
 
+### Gulp
+See <https://github.com/aliok/websocket-protobufs-ts-experiments> for Gulp integration.
+
 ### Why ?
 
 Because intelligent code completion is cool :-)
