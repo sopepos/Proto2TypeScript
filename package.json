@@ -1,6 +1,6 @@
 {
   "name": "proto2typescript",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Typescript definition generator for Protocol Buffer definitions",
   "main": "lib/proto2typescript.js",
   "bin": {
