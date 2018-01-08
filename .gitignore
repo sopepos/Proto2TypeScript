@@ -20,3 +20,5 @@ tests.js
 .idea
 *.iml
 
+/temp
+/.vscode

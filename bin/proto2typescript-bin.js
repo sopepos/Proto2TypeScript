@@ -1,49 +1,41 @@
 #!/usr/bin/env node
 
-var argv = require('optimist')
-    .usage('Convert a ProtoBuf.js JSON description in TypeScript definitions.\nUsage: $0')
+/* eslint-disable no-console */
+const argv = require("yargs")
+  .usage("Convert a ProtoBuf.js JSON description in TypeScript definitions.\nUsage: $0 <options>")
 
-    .demand('f')
-    .alias('f', 'file')
-    .describe('f', 'The JSON file')
+  .demandOption("f")
+  .alias("f", "file")
+  .describe("f", "The JSON file")
 
-    .boolean('c')
-    .alias('c', 'camelCaseGetSet')
-    .describe('c', 'Generate getter and setters in camel case notation')
-    .default('c', true)
+  .boolean("noCreate")
+  .describe("noCreate", "Don't generate create() method")
 
-    .boolean('u')
-    .alias('u', 'underscoreGetSet')
-    .describe('u', 'Generate getter and setters in underscore notation')
-    .default('u', false)
+  .string("m")
+  .alias("m", "moduleName")
+  .describe("m", "Top level module name")
 
-    .boolean('p')
-    .alias('p', 'properties')
-    .describe('p', 'Generate properties')
-    .default('p', true)
+  .help()
+  .argv;
 
-    .argv;
+const fs = require("fs");
+const proto2typescript = require("../lib/proto2typescript");
 
-
-var vinylFile = require('vinyl-file');
-var proto2typescript = require('../lib/proto2typescript');
-
-var file = vinylFile.readSync(argv.file);
+const fileContent = fs.readFileSync(argv.file);
 
 proto2typescript(
-    file.contents,
-    {
-        camelCaseGetSet: argv.camelCaseGetSet,
-        underscoreGetSet: argv.underscoreGetSet,
-        properties: argv.properties
-    },
-    function (err, out) {
-        if (err != null) {
-            console.error(err);
-            process.exit(1);
-        }
-        else {
-            process.stdout.write(out);
-        }
+  fileContent,
+  {
+    noCreate: argv.noCreate,
+    moduleName: argv.moduleName,
+  },
+  function (err, out) {
+    if (err) {
+      console.error(err);
+      process.exit(1);
     }
+    else {
+      process.stdout.write(out);
+    }
+  }
 );

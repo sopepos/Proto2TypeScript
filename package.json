@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/aliok/Proto2TypeScript"
+    "url": "https://github.com/sopepos/Proto2TypeScript"
   },
   "bugs": {
-    "url": "https://github.com/aliok/Proto2TypeScript/issues"
+    "url": "https://github.com/sopepos/Proto2TypeScript/issues"
   },
-  "homepage": "https://github.com/aliok/Proto2TypeScript",
+  "homepage": "https://github.com/sopepos/Proto2TypeScript",
   "keywords": [
     "net",
     "buffer",
@@ -24,13 +24,14 @@
     "typescript"
   ],
   "dependencies": {
-    "dustjs-linkedin": "~2.3.3",
-    "optimist": "~0.6.1",
-    "protobufjs": "~4.0.0",
-    "vinyl-file": "^1.2.1"
+    "dustjs-linkedin": "~2.7.5",
+    "lodash": "^4.17.4",
+    "protobufjs": "~6.8.4",
+    "yargs": "~10.0.3"
   },
   "devDependencies": {
-    "expect.js": "~0.3.1",
-    "mocha": "~1.17.1"
-  }
+    "chai": "^3.5.0",
+    "mocha": "^3.5.3"
+  },
+  "license": "MIT"
 }

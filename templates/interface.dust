@@ -1,18 +1,17 @@
-declare module {fullPackageName} {
+{?fullPackageName}declare module {fullPackageName} {
 
-	export interface {name} extends ProtoBufModel {
-		{#fields}{#properties}{name}{rule|optionalFieldDeclaration}: {type|convertType}{rule|repeatedType};
-		{/properties}{#camelCaseGetSet}get{name|camelCase|firstLetterInUpperCase}() : {type|convertType}{rule|repeatedType};
-		set{name|camelCase|firstLetterInUpperCase}({name|camelCase|firstLetterInLowerCase} : {type|convertType}{rule|repeatedType}): void;
-		{/camelCaseGetSet}{#underscoreGetSet}
-		get_{name}() : {type|convertType}{rule|repeatedType};
-		set_{name}({name|firstLetterInLowerCase} : {type|convertType}{rule|repeatedType}): void;
-		{/underscoreGetSet}{/fields}
+	export interface I{name} {
+{#fields}		{name}{rule|optionalFieldDeclaration}: {type|convertType}{rule|repeatedType};
+{/fields}	}
+
+	export class {name} {
+		constructor(properties?: I{name});
+{#fields}		public {name}{rule|optionalFieldDeclaration}: {type|convertType}{rule|repeatedType};
+{/fields}{^options.noCreate}		public static create(properties?: I{name}): {name};
+{/options.noCreate}		public static encode(message: I{name}, writer?: $protobuf.Writer): $protobuf.Writer;
+		public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): {name};
 	}
-	
-	{>builder:./}	
 }
-{#messages}
-{>interface:./}{/messages}{#enums}
-{>enum:./}
+{/fullPackageName}
+{#messages}{>interface:./}{/messages}{#enums}{>enum:./}
 {/enums}
