@@ -5,7 +5,7 @@ declare module {fullPackageName} {
 {#fields}		{name}{rule|optionalFieldDeclaration}: {type|convertType}{rule|repeatedType};
 {/fields}	}
 
-	export class {name} {
+	export class {name} implements I{name} {
 		constructor(properties?: I{name});
 {#fields}		public {name}{rule|optionalFieldDeclaration}: {type|convertType}{rule|repeatedType};
 {/fields}{^options.noCreate}		public static create(properties?: I{name}): {name};
