@@ -1,4 +1,5 @@
-{?fullPackageName}declare module {fullPackageName} {
+{?fullPackageName}
+declare module {fullPackageName} {
 
 	export interface I{name} {
 {#fields}		{name}{rule|optionalFieldDeclaration}: {type|convertType}{rule|repeatedType};
@@ -8,10 +9,8 @@
 		constructor(properties?: I{name});
 {#fields}		public {name}{rule|optionalFieldDeclaration}: {type|convertType}{rule|repeatedType};
 {/fields}{^options.noCreate}		public static create(properties?: I{name}): {name};
-{/options.noCreate}		public static encode(message: I{name}, writer?: $protobuf.Writer): $protobuf.Writer;
-		public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): {name};
+{/options.noCreate}		public static encode(message: I{name}, writer?: protobuf.Writer): protobuf.Writer;
+		public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): {name};
 	}
 }
-{/fullPackageName}
-{#messages}{>interface:./}{/messages}{#enums}{>enum:./}
-{/enums}
+{/fullPackageName}{#messages}{>interface:./}{/messages}{#enums}{>enum:./}{/enums}
