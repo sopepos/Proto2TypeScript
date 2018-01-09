@@ -8,8 +8,17 @@ const argv = require("yargs")
   .alias("f", "file")
   .describe("f", "The JSON file")
 
+  .boolean("noCtor")
+  .describe("noCtor", "Don't generate constructor")
+
   .boolean("noCreate")
   .describe("noCreate", "Don't generate create() method")
+
+  .boolean("noCoding")
+  .describe("noCoding", "Don't generate encode()/decode() methods")
+
+  .boolean("noInherit")
+  .describe("noInherit", "Don't inherit Message<T>")
 
   .string("m")
   .alias("m", "moduleName")
@@ -26,7 +35,10 @@ const fileContent = fs.readFileSync(argv.file);
 proto2typescript(
   fileContent,
   {
+    noCtor: argv.noCtor,
     noCreate: argv.noCreate,
+    noCoding: argv.noCoding,
+    noInherit: argv.noInherit,
     moduleName: argv.moduleName,
   },
   function (err, out) {

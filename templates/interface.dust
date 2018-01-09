@@ -5,12 +5,12 @@ declare module {fullPackageName} {
 {#fields}		{name}{rule|optionalFieldDeclaration}: {type|convertType}{rule|repeatedType};
 {/fields}	}
 
-	export class {name} implements I{name} {
-		constructor(properties?: I{name});
-{#fields}		public {name}{rule|optionalFieldDeclaration}: {type|convertType}{rule|repeatedType};
+	export class {name} {^options.noInherit}extends protobuf.Message<{name}> {/options.noInherit}implements I{name} {
+{^options.noCtor}		constructor(properties?: I{name});
+{/options.noCtor}{#fields}		public {name}{rule|optionalFieldDeclaration}: {type|convertType}{rule|repeatedType};
 {/fields}{^options.noCreate}		public static create(properties?: I{name}): {name};
-{/options.noCreate}		public static encode(message: I{name}, writer?: protobuf.Writer): protobuf.Writer;
+{/options.noCreate}{^options.noCoding}		public static encode(message: I{name}, writer?: protobuf.Writer): protobuf.Writer;
 		public static decode(reader: (protobuf.Reader|Uint8Array), length?: number): {name};
-	}
+{/options.noCoding}	}
 }
 {/fullPackageName}{#messages}{>interface:./}{/messages}{#enums}{>enum:./}{/enums}
