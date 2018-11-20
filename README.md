@@ -1,7 +1,32 @@
-Proto2TypeScript
+Pbjs2TypeScript (Proto2TypeScript)
 ================
 
 This tool generate TypeScript definitions for your Protocol Buffers models, when you use the excellent [ProtoBuf.js](https://github.com/dcodeIO/ProtoBuf.js/) library.
+
+UPDATES -- Difference from [aliok/Proto2TypeScript](https://github.com/aliok/Proto2TypeScript)
+================
+
+This fork version:
+* Added support for protobufjs (only) 6.x json format
+* Rewrote code in ES6 syntax
+* Separated data interface from Message class
+```typescript
+export interface IAwesomeMessage {
+  awesome_field: number;
+}
+
+export class AwesomeMessage extends protobuf.Message<AwesomeMessage> implements IAwesomeMessage {
+  public awesome_field: number;
+  ...
+}
+```
+* Removed `-c`, `-u`, `-p` options
+* Added `-m`, `--moduleName`, `--noCtor`, `--noCreate`, `--noCoding`, `--noInherit` options
+  * `-m`, `--moduleName`: Set top level module name
+  * `--noCtor`: Don't generate `constructor`
+  * `--noCreate`, Don't generate `create()` method
+  * `--noCoding`: Don't generate `encode()`/`decode()` methods
+  * `--noInherit`: Don't inherit `Message<T>` class
 
 UPDATES -- Difference from the original
 ================
@@ -20,7 +45,7 @@ Also, the build process was a mess. I fixed those. But I don't even send a PR, b
 
 ### Installation
 ```sh
-npm install proto2typescript -g
+npm install pbjs2typescript -g
 ```
 
 ### Usage
