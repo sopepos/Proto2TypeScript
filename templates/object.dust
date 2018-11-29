@@ -1,0 +1,21 @@
+{#isType}
+declare module {parent.fullName|toModuleName} {
+  export interface I{name} {
+{#fieldsArray}    {name}{?optional}?{/optional}: {interfaceFieldType}{?repeated}[]{/repeated};
+{/fieldsArray}  }
+
+  export class {name} {^options.noInherit}extends protobuf.Message<{name}> {/options.noInherit}implements I{name} {
+{^options.noCtor}    constructor(properties?: I{name});
+{/options.noCtor}{#fieldsArray}    public {name}{?optional}?{/optional}: {classFieldType}{?repeated}[]{/repeated};
+{/fieldsArray}{^options.noCreate}    public static create(properties?: I{name}): {name};
+{/options.noCreate}{^options.noCoding}    public static encode(message: I{name}, writer?: protobuf.Writer): protobuf.Writer;
+    public static decode(reader: (protobuf.Reader | Uint8Array), length?: number): {name};
+{/options.noCoding}  }
+}
+{/isType}{#isEnum}
+declare module {parent.fullName|toModuleName} {
+  export const enum {name} {
+{#enumValues}    {name} = {value},
+{/enumValues}  }
+}
+{/isEnum}{#nestedArray}{>object:./}{/nestedArray}

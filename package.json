@@ -1,10 +1,10 @@
 {
   "name": "pbjs2typescript",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Typescript definition generator for Protocol Buffer definitions",
   "main": "lib/proto2typescript.js",
   "bin": {
-    "proto2typescript": "./bin/proto2typescript-bin.js"
+    "pbjs2typescript": "./bin/proto2typescript-bin.js"
   },
   "repository": {
     "type": "git",
@@ -16,13 +16,13 @@
   "homepage": "https://github.com/sopepos/Proto2TypeScript",
   "keywords": [
     "net",
-    "buffer",
     "proto",
+    "buffer",
     "protobuf",
+    "protobuffer",
     "protobufjs",
+    "pbjs",
     "serialization",
-    "bytebuffer",
-    "websocket",
     "typescript"
   ],
   "dependencies": {

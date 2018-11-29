@@ -2,11 +2,11 @@
 
 /* eslint-disable no-console */
 const argv = require("yargs")
-  .usage("Convert a ProtoBuf.js JSON description in TypeScript definitions.\nUsage: $0 <options>")
+  .usage("Convert a proto file or ProtoBuf.js JSON description to TypeScript definitions.\nUsage: $0 <options>")
 
   .demandOption("f")
   .alias("f", "file")
-  .describe("f", "The JSON file")
+  .describe("f", "*.json or *.proto file")
 
   .boolean("noCtor")
   .describe("noCtor", "Don't generate constructor")
@@ -20,26 +20,23 @@ const argv = require("yargs")
   .boolean("noInherit")
   .describe("noInherit", "Don't inherit Message<T>")
 
-  .string("m")
-  .alias("m", "moduleName")
-  .describe("m", "Top level module name")
+  .string("bytes")
+  .default("bytes", "Uint8Array")
+  .describe("bytes", "Set type name of \"bytes\" field")
 
   .help()
   .argv;
 
-const fs = require("fs");
 const proto2typescript = require("../lib/proto2typescript");
 
-const fileContent = fs.readFileSync(argv.file);
-
 proto2typescript(
-  fileContent,
+  argv.file,
   {
     noCtor: argv.noCtor,
     noCreate: argv.noCreate,
     noCoding: argv.noCoding,
     noInherit: argv.noInherit,
-    moduleName: argv.moduleName,
+    bytes: argv.bytes,
   },
   function (err, out) {
     if (err) {
